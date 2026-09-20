@@ -870,14 +870,14 @@ class SCAnalysis(BaseAnalysisElement):
         # if not hasattr(self, 'pce_coefs'):
         #     self.pce_coefs = {}
 
-        if not hasattr(self, "stieltjes_cache"):
-            self.stieltjes_cache = {}
+        if not hasattr(self, "_stieltjes_cache"):
+            self._stieltjes_cache = {}
         
         def base_get_stieltjes(k, distributions, n):
             key = (k, tuple(distributions), n)
-            if key not in self.stieltjes_cache:
-                self.stieltjes_cache[key] = cp.expansion.stieltjes(k[n] - 1, dist=distributions[n], normed=True)
-            return self.stieltjes_cache[key]
+            if key not in self._stieltjes_cache:
+                self._stieltjes_cache[key] = cp.expansion.stieltjes(k[n] - 1, dist=distributions[n], normed=True)
+            return self._stieltjes_cache[key]
         def get_stieltjes(k, n):
             return base_get_stieltjes(k, self.sampler.params_distribution, n)
 
